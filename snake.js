@@ -44,15 +44,8 @@ var Snake = {
         break;
     }
 
-    if (
-      newHead.x < 0 ||
-      newHead.x >= this.gridSize ||
-      newHead.y < 0 ||
-      newHead.y >= this.gridSize ||
-      this.snake.some(function(segment) {
-        return segment.x === newHead.x && segment.y === newHead.y;
-      })
-    ) {
+    // Check for collision
+    if (this.checkCollision(newHead)) {
       clearInterval(this.gameLoop);
       alert("Game Over!");
       return;
@@ -65,6 +58,23 @@ var Snake = {
     } else {
       this.snake.pop();
     }
+  },
+
+  checkCollision: function(newHead) {
+    // Check if the new head is outside the game grid
+    if (
+      newHead.x < 0 ||
+      newHead.x >= this.gridSize ||
+      newHead.y < 0 ||
+      newHead.y >= this.gridSize
+    ) {
+      return true;
+    }
+  
+    // Check if the new head collided with the snake's body
+    return this.snake.some(function(segment) {
+      return segment.x === newHead.x && segment.y === newHead.y;
+    });
   },
 
   drawFood: function() {
