@@ -48,4 +48,4 @@ Finally, in my previous commit I also cross the point where skipping the creatio
 
 I'm starting to think that it has forgotten what our code looks like. Some probing reveals that it's inconsistent in its memory of our work. I'd like to just send it diffs, as our relationship doesn't expand to the realm of me screensharing. For now, we work in parallel universes, and I need to jog its memory at a point in the near future.
 
-In parallel I'm doing small things to improve my tooling. I now generate the headlines for these log entries, and have added the git aliases that I recalled from my work with it in the early 2010s. `git ci`, `git st` and friends, welcome back.
+In parallel I'm doing small things to improve my tooling. I now generate the headlines for these log entries (`git log --oneline -1 | sed -E 's/([a-z0-9]*)/### [\1](https:\/\/github.com\/mwillerich\/browsersnake\/commit\/\1)/'`), and have added the git aliases that I recalled from my work with it in the early 2010s. `git ci`, `git st` and friends, welcome back.
