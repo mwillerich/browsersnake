@@ -9,6 +9,7 @@ var Snake = {
     { x: 3, y: 5 },
   ],
   food: { x: 10, y: 10 },
+  collisionSound: null,
 
   drawSquare: function(x, y) {
     context.fillRect(
@@ -47,8 +48,7 @@ var Snake = {
     // Check for collision
     if (this.checkCollision(newHead)) {
       clearInterval(this.gameLoop);
-      var collisionSound = document.getElementById("collision-sound");
-      collisionSound.play();
+      this.collisionSound.play();
       alert("Game Over!");
       return;
     }
@@ -91,6 +91,14 @@ var Snake = {
 
   init: function() {
     var self = this;
+    // Get the collision sound element from the HTML
+    this.collisionSound = document.getElementById("collision-sound");
+
+    this.collisionSound.addEventListener("canplaythrough", function() {
+      // The sound is ready to be played
+      console.log("Collision sound loaded and ready to play");
+    });
+
     this.gameLoop = setInterval(function() {
       context.clearRect(0, 0, canvas.width, canvas.height);
       self.moveSnake();
