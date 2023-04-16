@@ -10,6 +10,7 @@ var Snake = {
   ],
   food: { x: 10, y: 10 },
   collisionSound: null,
+  score: 0,
 
   drawSquare: function(x, y) {
     context.fillRect(
@@ -55,7 +56,9 @@ var Snake = {
 
     this.snake.unshift(newHead);
 
+    // Dinnertime?
     if (newHead.x === this.food.x && newHead.y === this.food.y) {
+      this.score += 1;
       this.generateNewFoodPosition();
     } else {
       this.snake.pop();
@@ -99,11 +102,14 @@ var Snake = {
       console.log("Collision sound loaded and ready to play");
     });
 
+    this.scoreCounter = document.getElementById("score");
+
     this.gameLoop = setInterval(function() {
       context.clearRect(0, 0, canvas.width, canvas.height);
       self.moveSnake();
       self.drawSnake();
       self.drawFood();
+      self.scoreCounter.innerHTML = "Score: " + self.score;
     }, 100);
 
     document.addEventListener("keydown", function(event) {
