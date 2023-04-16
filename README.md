@@ -49,3 +49,23 @@ Finally, in my previous commit I also cross the point where skipping the creatio
 I'm starting to think that it has forgotten what our code looks like. Some probing reveals that it's inconsistent in its memory of our work. I'd like to just send it diffs, as our relationship doesn't expand to the realm of me screensharing. For now, we work in parallel universes, and I need to jog its memory at a point in the near future.
 
 In parallel I'm doing small things to improve my tooling. I now generate the headlines for these log entries (`git log --oneline -1 | sed -E 's/([a-z0-9]*)/### [\1](https:\/\/github.com\/mwillerich\/browsersnake\/commit\/\1)/'`), and have added the git aliases that I recalled from my work with it in the early 2010s. `git ci`, `git st` and friends, welcome back.
+
+### [a0b56d8](https://github.com/mwillerich/browsersnake/commit/a0b56d8) adding a score counter
+
+Next up we implement the score counter. ChatGPT gives a thorough first explanation on how it would do it. As usual, the explanation is useful, the reference points, where code would be added, are off (non-existing methods, typically). We slow-dance our way towards keeping the text content of a `div` outside the canvas up to date with the scores, and add some CSS for centering; from here on I don't insist anymore that ChatGPT suggests to me the exact code that I'm adding to the source. It forgets that I wanted the score next to the canvas. Tomayto tomahto, I put the changes in the way I think is best.
+
+### Excursion: using collaborative tools
+
+And then we talk about it. I learn about ChatGPT using the current session's conversation plus pre-existing knowledge to come up with answers, but that there's no guarantee it can access the whole session at the point of answering, and that its context fluctuates from answer to answer. The next few sentences are interesting, though:
+
+> However, there are some strategies we can use to make sure that important information is not forgotten.
+> 
+> One way is to summarize key points or decisions we make during the conversation and repeat them back to each other to confirm understanding. Another way is to use a collaborative tool, such as a shared document or note-taking app, to keep track of important information and decisions made during our conversation.
+> 
+> In addition, if you have specific information or instructions that you want me to remember throughout the session, you can always remind me of it by providing the necessary context.
+
+Whaaat, we can use collaborative tools? ChatGPT starts fumbling. I can't do this, I'm an AI, I can't do that, etc. And: 
+
+> I do not have the ability to access or retrieve information outside of this conversation or interact with any external data sources without explicit permission and authorization.
+
+So after giving it permission to look at the public website https://github.com/mwillerich/browsersnake/, I am able to get it to confirm whether our latest changes for the score were already pushed or not. Maybe it took a confident 50/50 chance, but it was correct. Asking it to repeat the content of snake.html on github.com works, although, in five attempts there is some creative licence in it each time. But at least I now know how to remind it of the current state of the code when asking for the next development step.
