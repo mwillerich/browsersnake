@@ -47,6 +47,8 @@ var Snake = {
     // Check for collision
     if (this.checkCollision(newHead)) {
       clearInterval(this.gameLoop);
+      var collisionSound = document.getElementById("collision-sound");
+      collisionSound.play();
       alert("Game Over!");
       return;
     }
