@@ -69,3 +69,11 @@ Whaaat, we can use collaborative tools? ChatGPT starts fumbling. I can't do this
 > I do not have the ability to access or retrieve information outside of this conversation or interact with any external data sources without explicit permission and authorization.
 
 So after giving it permission to look at the public website https://github.com/mwillerich/browsersnake/, I am able to get it to confirm whether our latest changes for the score were already pushed or not. Maybe it took a confident 50/50 chance, but it was correct. Asking it to repeat the content of snake.html on github.com works, although, in five attempts there is some creative licence in it each time. But at least I now know how to remind it of the current state of the code when asking for the next development step.
+
+### [045773a](https://github.com/mwillerich/browsersnake/commit/045773a) avoiding food collisions
+
+Before starting the day job, I wanted to tidy up something I had noticed while testing: Food would sometimes be placed on the snake's body. We can't have that, so I ask for an improvement to this. By now the suggestions and real code base deviate with every response, and I need to amend any suggestions to make it work. What's sad is that the first suggestion often appears to be more elegant than what we settle for in the end, ChatGPT seems to mentally be doing code optimisations that don't exist _yet_.
+
+It's fun to test this food collision avoidance, as the chances are not that great, even with reducing the area of where it can be placed.
+
+<img width="1072" alt="Plenty of food collisions detected" src="https://user-images.githubusercontent.com/486892/232417031-3f3469f4-9908-4a0c-91ea-2276a726fa4d.png">
