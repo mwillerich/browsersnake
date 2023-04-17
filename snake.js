@@ -90,6 +90,15 @@ var Snake = {
   generateNewFoodPosition: function() {
     this.food.x = Math.floor(Math.random() * this.gridSize);
     this.food.y = Math.floor(Math.random() * this.gridSize);
+
+    // check if the food has been generated on the snake's body
+    for (let i = 0; i < this.snake.length; i++) {
+      if (this.food.x === this.snake[i].x && this.food.y === this.snake[i].y) {
+        console.log("avoiding food collision");
+        this.generateNewFoodPosition();
+        break;
+      }
+    }
   },
 
   init: function() {
