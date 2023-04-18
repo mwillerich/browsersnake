@@ -22,10 +22,24 @@ var Snake = {
   },
 
   drawSnake: function() {
+    let rotate = 0;
+    if (this.direction === "right") {
+      rotate = Math.PI / 2;
+    } else if (this.direction === "down") {
+      rotate = Math.PI;
+    } else if (this.direction === "left") {
+      rotate = -Math.PI / 2;
+    }
+    context.save();
+    context.setTransform(1, 0, 0, 1, (this.snake[0].x * this.squareSize)+(this.squareSize / 2), (this.snake[0].y * this.squareSize+(this.squareSize / 2))); // sets scale and origin
+    context.rotate(rotate);
+    context.drawImage(snakeHeadImage, -this.squareSize / 2, -this.squareSize / 2, this.squareSize, this.squareSize);
+    context.restore();
+
     context.fillStyle = "green";
-    this.snake.forEach(function(segment) {
-      Snake.drawSquare(segment.x, segment.y);
-    });
+    for (let i = 1; i < this.snake.length; i++) {
+      Snake.drawSquare(this.snake[i].x, this.snake[i].y);
+    };
   },
 
   moveSnake: function() {
@@ -151,6 +165,9 @@ var Snake = {
 // Initialize the canvas and context
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
+
+var snakeHeadImage = new Image();
+snakeHeadImage.src = "img/snakehead.png";
 
 // Initialize the game
 Snake.init();
