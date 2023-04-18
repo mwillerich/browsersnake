@@ -85,5 +85,12 @@ ChatGPT, maybe due to terminology, first suggested I want to create 20x20 bitmap
 
 https://user-images.githubusercontent.com/486892/232804326-40f01fb9-113d-4e1e-91ac-8648792a92ba.mov
 
+### [690954a](https://github.com/mwillerich/browsersnake/commit/690954a) levelling up
+We have levels! Well, _I_ have levels, I actually didn't ask ChatGPT about this, and I notice how the coding feels different:
 
+- Let's face it, this is still fairly trivial, easy-to-grasp code. It feels much quicker to add these changes by hand.
+- But the changes are immediately more messy. It's all in a trying-out-if-this-works style, and then an idea comes along, and then that one function keeps expanding further an further
+- Ok, let's break this area into smaller chunks. Here the need for cleanliness kicks back in, and I move all constants to the top. So much easier to test!
+- And scope creep strikes again, during testing I start fiddling with the boundaries of when a new level is reached, and how much faster the game should become every level. I don't even recall when I agreed with myself that I'm deviating from the idea of levels, originally I wanted to put obstacles into the field. Changing cycle speed was easier, I guess.
 
+So, with this commit, I was able to change the game experience by quite a bit, it felt light (compared to the canvas mess anything feels light!), but boy did I not check myself. The pride of a clean codebase is gone. Maybe it's a good idea to have ChatGPT look after this code after all.
