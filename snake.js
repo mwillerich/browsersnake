@@ -1,7 +1,9 @@
-// Define the Snake object
 var Snake = {
   gridSize: 20,
   squareSize: 20,
+  baseCycle: 110,
+  maxScore: 6,
+  collisionSound: null,
   direction: "right",
   snake: [
     { x: 5, y: 5 },
@@ -9,8 +11,20 @@ var Snake = {
     { x: 3, y: 5 },
   ],
   food: { x: 10, y: 10 },
-  collisionSound: null,
   score: 0,
+  level: 1,
+
+  resetGame: function() {
+    this.direction = "right";
+    this.snake = [
+      { x: 5, y: 5 },
+      { x: 4, y: 5 },
+      { x: 3, y: 5 },
+    ];
+    this.food = { x: 10, y: 10 };
+    this.score = 0;
+    this.level = 1;
+  },
 
   drawSquare: function(x, y) {
     context.fillRect(
@@ -43,8 +57,8 @@ var Snake = {
   },
 
   moveSnake: function() {
-    var head = this.snake[0];
-    var newHead;
+    let head = this.snake[0];
+    let newHead;
     switch (this.direction) {
       case "up":
         newHead = { x: head.x, y: head.y - 1 };
@@ -62,9 +76,7 @@ var Snake = {
 
     // Check for collision
     if (this.checkCollision(newHead)) {
-      clearInterval(this.gameLoop);
-      this.collisionSound.play();
-      alert("Game Over!");
+      this.endLevel(false);
       return;
     }
 
@@ -115,6 +127,39 @@ var Snake = {
     }
   },
 
+  keepScore: function() {
+    this.scoreCounter.innerHTML = "Score: " + this.score;
+    if (this.score===this.maxScore) {
+      this.endLevel(true);
+      return;
+    }
+  },
+
+  startLevel: function() {
+    var self = this;
+    this.score = 0;
+    this.levelCounter.innerHTML = "Level: " + this.level;
+    this.gameLoop = setInterval(function() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      self.moveSnake();
+      self.drawSnake();
+      self.drawFood();
+      self.keepScore();
+    }, this.baseCycle-((this.level-1)*5));
+  },
+
+  endLevel: function(next) {
+    clearInterval(this.gameLoop);
+    if(next) {
+      //this.levelCompleteSound.play();
+      this.level++;
+      this.startLevel();
+    } else {
+      this.collisionSound.play();
+      alert("Game Over!");
+    }
+  },
+
   init: function() {
     var self = this;
     // Get the collision sound element from the HTML
@@ -126,14 +171,9 @@ var Snake = {
     });
 
     this.scoreCounter = document.getElementById("score");
-
-    this.gameLoop = setInterval(function() {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      self.moveSnake();
-      self.drawSnake();
-      self.drawFood();
-      self.scoreCounter.innerHTML = "Score: " + self.score;
-    }, 100);
+    this.levelCounter = document.getElementById("level");
+    this.resetGame();
+    this.startLevel();
 
     document.addEventListener("keydown", function(event) {
       switch (event.key) {
@@ -163,10 +203,10 @@ var Snake = {
 };
 
 // Initialize the canvas and context
-var canvas = document.getElementById("canvas");
-var context = canvas.getContext("2d");
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
 
-var snakeHeadImage = new Image();
+const snakeHeadImage = new Image();
 snakeHeadImage.src = "img/snakehead.png";
 
 // Initialize the game
