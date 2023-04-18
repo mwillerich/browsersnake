@@ -77,3 +77,13 @@ Before starting the day job, I wanted to tidy up something I had noticed while t
 It's fun to test this food collision avoidance, as the chances are not that great, even with reducing the area of where it can be placed.
 
 <img width="1072" alt="Plenty of food collisions detected" src="https://user-images.githubusercontent.com/486892/232417031-3f3469f4-9908-4a0c-91ea-2276a726fa4d.png">
+
+### [3392c18](https://github.com/mwillerich/browsersnake/commit/3392c18) lets add a face to the snake
+
+As a next step I felt some customization was necessary. My kids were not impressed with this monumental coding effort, so I got one of them involved and she produced the snake's head for me to digitize and integrate. As in my last few active years as a developer I was only working on the server side, we touched upon something I've never done: Working with the canvas element. I had a paper drawing for the head and no idea how to best integrate it.
+ChatGPT, maybe due to terminology, first suggested I want to create 20x20 bitmap array, but broke down while sending the syntax for an array of arrays with 400 values. Then it confused the `drawSquare()` method to be able to draw single pixels, and I abandoned that idea. Let's just use a .png. I created the file, and we took it from there. It took 11 rounds, with one significant off-by-one mistake on my side and many I-can't-remember-what-I-last-said mistakes on ChatGPT's side, and in the end I used a routine from Stack Overflow, until the snake had a head, connected to its body, after any turn in any direction. My desire to get this working was stronger than my desire to make sense out of ChatGPT's drivel, or rather, to first adopt and then debug its suggestions.
+
+https://user-images.githubusercontent.com/486892/232804326-40f01fb9-113d-4e1e-91ac-8648792a92ba.mov
+
+
+
