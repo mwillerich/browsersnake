@@ -1,5 +1,5 @@
 # browsersnake
-ChatGPT and I are pair programming on a browser implementation of the game snake.
+ChatGPT and I are pair programming on a browser implementation of the game snake. You can enjoy the game here: https://mwillerich.github.io/browsersnake/snake.html
 
 ## Progress log
 ### [75e006d](https://github.com/mwillerich/browsersnake/commit/75e006d5a40719241457da1b695a3e1f35a41980) first implementation suggestion
@@ -104,3 +104,6 @@ Looking for a sensible maximum length, ChatGPT suggested that "The fastest video
 
 <img width="400" alt="Snake doing an owlface" src="https://user-images.githubusercontent.com/486892/232915328-ea7cf3ef-cfc7-40e0-b4d0-20a81b3c7aca.png">
 
+### Excursion: the Hydra (geddit? Snake? Hydra?) of executing one good idea
+For every few commits that I wrote about here, there are a few more ideas and conversations with ChatGPT, that I try to get back to at some point, just like the issue with the multiple keystrokes per cycle I mentioned above. Other things are both off-ChatGPT and somewhat off-site; last night I finally set up Github Pages for this project. I mean, this is a simple, clientside browser game, why shouldn't it be hosted somewhere for you to play? I first looked into this at the end of last week, and it really is only a few clicks.
+It's funny, I'm building this game with as little "auto-pilot" as possible; working this particular way with this particular conversational AI, which I really can't recommend at all, dear future rockstar developers (plenty examples given above), makes that pretty impossible anyway. Doing it this way allows me to see that on almost every step of the way, there aren't only smaller or larger decisions to make, but there's always that one-other-thing-but-not-now, that turns ticking any item off of a list into adding two new ones. Good thing I'm not getting paid for this 😅.
