@@ -1,4 +1,6 @@
 var Snake = {
+  keyPressQueue: [],
+  maxKeyPressQueue: 5,
   gridSize: 20,
   squareSize: 20,
   baseCycle: 110,
@@ -54,6 +56,35 @@ var Snake = {
     for (let i = 1; i < this.snake.length; i++) {
       Snake.drawSquare(this.snake[i].x, this.snake[i].y);
     };
+  },
+
+  setDirection: function() {
+    if (this.keyPressQueue.length > 0) {
+      console.log(this.keyPressQueue.length);
+      const validKeyPress = this.keyPressQueue.shift();
+      switch (validKeyPress) {
+        case "ArrowUp":
+          if (this.direction !== "down") {
+            this.direction = "up";
+          }
+          break;
+        case "ArrowDown":
+          if (this.direction !== "up") {
+            this.direction = "down";
+          }
+          break;
+        case "ArrowLeft":
+          if (this.direction !== "right") {
+            this.direction = "left";
+          }
+          break;
+        case "ArrowRight":
+          if (this.direction !== "left") {
+            this.direction = "right";
+          }
+          break;
+      }
+    }
   },
 
   moveSnake: function() {
@@ -141,6 +172,7 @@ var Snake = {
     this.levelCounter.innerHTML = "Level: " + this.level;
     this.gameLoop = setInterval(function() {
       context.clearRect(0, 0, canvas.width, canvas.height);
+      self.setDirection();
       self.moveSnake();
       self.drawSnake();
       self.drawFood();
@@ -175,28 +207,10 @@ var Snake = {
     this.resetGame();
     this.startLevel();
 
-    document.addEventListener("keydown", function(event) {
-      switch (event.key) {
-        case "ArrowUp":
-          if (self.direction !== "down") {
-            self.direction = "up";
-          }
-          break;
-        case "ArrowDown":
-          if (self.direction !== "up") {
-            self.direction = "down";
-          }
-          break;
-        case "ArrowLeft":
-          if (self.direction !== "right") {
-            self.direction = "left";
-          }
-          break;
-        case "ArrowRight":
-          if (self.direction !== "left") {
-            self.direction = "right";
-          }
-          break;
+    document.addEventListener("keydown", event => {
+      const key = event.key;
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(key) && self.keyPressQueue.length < self.maxKeyPressQueue) {
+        self.keyPressQueue.push(key);
       }
     });
   },
