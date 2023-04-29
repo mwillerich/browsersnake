@@ -207,21 +207,42 @@ var Snake = {
     }
   },
 
-  drawLetter: function(x, y, letter) {
+  drawLetter: function(x, y, letter, direction) {
+    context.save(); // save current context state
     context.fillStyle = 'white';
-    context.fillText(letter,(x*20)+3,(y*20)+17)
+  
+    // Translate the context to the center of the square
+    const centerX = (x * 20) + 10;
+    const centerY = (y * 20) + 10;
+    context.translate(centerX, centerY);
+  
+    // Rotate the context based on the direction
+    if (direction === 'up') {
+      context.rotate(0);
+    } else if (direction === 'down') {
+      context.rotate(Math.PI);
+    } else if (direction === 'left') {
+      context.rotate(Math.PI / 2);
+    } else if (direction === 'right') {
+      context.rotate((3 * Math.PI) / 2);
+    }
+  
+    context.fillText(letter, -5, 5); // Draw the letter
+    context.restore(); // restore context state
   },
 
   gameOverSequence: function() {
     let currentIndex = 0;
     const intervalTime = 400;
     let squares = this.snake;
+    let splash = false;
 
     if(this.snake.length < this.gameOver.length) {
       for (let i = 2; i < this.gameOver.length; i++) {
         this.drawSquare(this.gameOverMinPosition[i].x, this.gameOverMinPosition[i].y);
       };
       squares = this.gameOverMinPosition;
+      splash = true;
     }
     context.font = '20px PT Mono';
     context.fillStyle = 'white';
@@ -230,10 +251,14 @@ var Snake = {
     const animateGameover = () => {
       if (currentIndex < this.gameOver.length) {
         const letter = this.gameOver[currentIndex];
-        if (letter !== '') {
+        if (letter !== '') { //skipping spaces for animation rhythm
           const x = squares[currentIndex].x;
           const y = squares[currentIndex].y;
-          this.drawLetter(x, y, letter);
+          if(splash) {
+            this.drawLetter(x, y, letter, 'up');
+          } else {
+            this.drawLetter(x, y, letter, this.getLetterDirection(x, y, currentIndex, squares));
+          }
         }
         currentIndex++;
         setTimeout(animateGameover, intervalTime); // call the function recursively after intervalTime
@@ -241,6 +266,21 @@ var Snake = {
     };
     
     animateGameover(); // start the animation
+  },
+
+  getLetterDirection: function(x, y, index, snake) {
+    if (index === 0) {
+      return this.direction;
+    } else {
+      // Determine the direction based on the difference between current and previous position
+      const prevX = snake[index - 1].x;
+      const prevY = snake[index - 1].y;
+      if (x === prevX) {
+        return y < prevY ? 'down' : 'up';
+      } else {
+        return x < prevX ? 'left' : 'right';
+      }
+    }
   },
 
   init: function() {
