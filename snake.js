@@ -15,6 +15,21 @@ var Snake = {
   food: { x: 10, y: 10 },
   score: 0,
   level: 1,
+  gameOver: ['','','G','A','M','E','','O','V','E','R','!'],
+  gameOverMinPosition: [
+    { x: 3, y: 8 },
+    { x: 4, y: 8 },
+    { x: 5, y: 8 },
+    { x: 6, y: 8 },
+    { x: 7, y: 8 },
+    { x: 8, y: 8 },
+    { x: 9, y: 8 },
+    { x: 10, y: 8 },
+    { x: 11, y: 8 },
+    { x: 12, y: 8 },
+    { x: 13, y: 8 },
+    { x: 14, y: 8 },
+  ],
 
   resetGame: function() {
     this.direction = "right";
@@ -54,7 +69,7 @@ var Snake = {
 
     context.fillStyle = "green";
     for (let i = 1; i < this.snake.length; i++) {
-      Snake.drawSquare(this.snake[i].x, this.snake[i].y);
+      this.drawSquare(this.snake[i].x, this.snake[i].y);
     };
   },
 
@@ -188,7 +203,83 @@ var Snake = {
       this.startLevel();
     } else {
       this.collisionSound.play();
-      alert("Game Over!");
+      this.gameOverSequence();
+    }
+  },
+
+  drawLetter: function(x, y, letter, direction) {
+    context.save(); // save current context state
+    context.fillStyle = 'white';
+  
+    // Translate the context to the center of the square
+    const centerX = (x * 20) + 10;
+    const centerY = (y * 20) + 10;
+    context.translate(centerX, centerY);
+  
+    // Rotate the context based on the direction
+    if (direction === 'up') {
+      context.rotate(0);
+    } else if (direction === 'down') {
+      context.rotate(Math.PI);
+    } else if (direction === 'left') {
+      context.rotate(Math.PI / 2);
+    } else if (direction === 'right') {
+      context.rotate((3 * Math.PI) / 2);
+    }
+  
+    context.fillText(letter, -5, 5); // Draw the letter
+    context.restore(); // restore context state
+  },
+
+  gameOverSequence: function() {
+    let currentIndex = 0;
+    const intervalTime = 400;
+    let squares = this.snake;
+    let splash = false;
+
+    if(this.snake.length < this.gameOver.length) {
+      for (let i = 2; i < this.gameOver.length; i++) {
+        this.drawSquare(this.gameOverMinPosition[i].x, this.gameOverMinPosition[i].y);
+      };
+      squares = this.gameOverMinPosition;
+      splash = true;
+    }
+    context.font = '20px PT Mono';
+    context.fillStyle = 'white';
+    context.textBaseline = 'center';
+
+    const animateGameover = () => {
+      if (currentIndex < this.gameOver.length) {
+        const letter = this.gameOver[currentIndex];
+        if (letter !== '') { //skipping spaces for animation rhythm
+          const x = squares[currentIndex].x;
+          const y = squares[currentIndex].y;
+          if(splash) {
+            this.drawLetter(x, y, letter, 'up');
+          } else {
+            this.drawLetter(x, y, letter, this.getLetterDirection(x, y, currentIndex, squares));
+          }
+        }
+        currentIndex++;
+        setTimeout(animateGameover, intervalTime); // call the function recursively after intervalTime
+      }
+    };
+    
+    animateGameover(); // start the animation
+  },
+
+  getLetterDirection: function(x, y, index, snake) {
+    if (index === 0) {
+      return this.direction;
+    } else {
+      // Determine the direction based on the difference between current and previous position
+      const prevX = snake[index - 1].x;
+      const prevY = snake[index - 1].y;
+      if (x === prevX) {
+        return y < prevY ? 'down' : 'up';
+      } else {
+        return x < prevX ? 'left' : 'right';
+      }
     }
   },
 
