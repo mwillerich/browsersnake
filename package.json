@@ -1,0 +1,26 @@
+{
+  "name": "browsersnake",
+  "version": "1.0.0",
+  "description": "ChatGPT and I are pair programming on a browser implementation of the game snake. You can enjoy the game here: https://mwillerich.github.io/browsersnake/snake.html",
+  "main": "snake.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwillerich/browsersnake.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwillerich/browsersnake/issues"
+  },
+  "homepage": "https://github.com/mwillerich/browsersnake#readme",
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}
