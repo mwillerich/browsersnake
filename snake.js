@@ -6,6 +6,7 @@ var Snake = {
   baseCycle: 110,
   maxScore: 6,
   collisionSound: null,
+  eatSound: null,
   direction: "right",
   snake: [
     { x: 5, y: 5 },
@@ -131,6 +132,7 @@ var Snake = {
     // Dinnertime?
     if (newHead.x === this.food.x && newHead.y === this.food.y) {
       this.score += 1;
+      this.eatSound.play();
       this.generateNewFoodPosition();
     } else {
       this.snake.pop();
@@ -203,6 +205,10 @@ var Snake = {
       this.startLevel();
     } else {
       this.collisionSound.play();
+      self = this;
+      setTimeout(() => {
+        self.gameoverSound.play();
+      }, "750");
       this.gameOverSequence();
     }
   },
@@ -285,12 +291,20 @@ var Snake = {
 
   init: function() {
     var self = this;
-    // Get the collision sound element from the HTML
-    this.collisionSound = document.getElementById("collision-sound");
 
+    this.collisionSound = document.getElementById("collision-sound");
     this.collisionSound.addEventListener("canplaythrough", function() {
-      // The sound is ready to be played
-      console.log("Collision sound loaded and ready to play");
+      console.log("collision canplaythrough");
+    });
+
+    this.eatSound = document.getElementById("eat-sound");
+    this.eatSound.addEventListener("canplaythrough", function() {
+      console.log("eat canplaythrough");
+    });
+
+    this.gameoverSound = document.getElementById("gameover-sound");
+    this.gameoverSound.addEventListener("canplaythrough", function() {
+      console.log("gameover canplaythrough");
     });
 
     this.scoreCounter = document.getElementById("score");
@@ -314,5 +328,20 @@ const context = canvas.getContext("2d");
 const snakeHeadImage = new Image();
 snakeHeadImage.src = "img/snakehead.png";
 
-// Initialize the game
-Snake.init();
+const splashScreen = document.getElementById('splash-screen');
+const startButton = document.getElementById('start-button');
+
+// hide the canvas initially
+canvas.style.display = 'none';
+
+// add a click event listener to the start button
+startButton.addEventListener('click', startGame);
+
+function startGame() {
+  // show the canvas and hide the splash screen
+  canvas.style.display = 'block';
+  splashScreen.style.display = 'none';
+
+  // Initialize the game
+  Snake.init();
+}
