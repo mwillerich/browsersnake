@@ -6,6 +6,7 @@ var Snake = {
   baseCycle: 110,
   maxScore: 6,
   collisionSound: null,
+  eatSound: null,
   direction: "right",
   snake: [
     { x: 5, y: 5 },
@@ -131,6 +132,7 @@ var Snake = {
     // Dinnertime?
     if (newHead.x === this.food.x && newHead.y === this.food.y) {
       this.score += 1;
+      this.eatSound.play();
       this.generateNewFoodPosition();
     } else {
       this.snake.pop();
@@ -285,12 +287,15 @@ var Snake = {
 
   init: function() {
     var self = this;
-    // Get the collision sound element from the HTML
-    this.collisionSound = document.getElementById("collision-sound");
 
+    this.collisionSound = document.getElementById("collision-sound");
     this.collisionSound.addEventListener("canplaythrough", function() {
-      // The sound is ready to be played
-      console.log("Collision sound loaded and ready to play");
+      console.log("collision canplaythrough");
+    });
+
+    this.eatSound = document.getElementById("eat-sound");
+    this.eatSound.addEventListener("canplaythrough", function() {
+      console.log("eat canplaythrough");
     });
 
     this.scoreCounter = document.getElementById("score");
