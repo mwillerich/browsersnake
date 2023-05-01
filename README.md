@@ -1,10 +1,12 @@
 # browsersnake
+
 ChatGPT and I are pair programming on a browser implementation of the game snake. You can enjoy the game here: https://mwillerich.github.io/browsersnake/snake.html
 
 ## Progress log
+
 ### [75e006d](https://github.com/mwillerich/browsersnake/commit/75e006d5a40719241457da1b695a3e1f35a41980) first implementation suggestion
 
-We talk about easy-to-implement browser games using HTML, CSS and Javascript. ChatGPT gives me a few options and we settle on snake. Pong would've also been cool, but that's for another day. ChatGPT gives me its first suggestion of what an implementation could look like. 
+We talk about easy-to-implement browser games using HTML, CSS and Javascript. ChatGPT gives me a few options and we settle on snake. Pong would've also been cool, but that's for another day. ChatGPT gives me its first suggestion of what an implementation could look like.
 
 Right off the bat an issue shows up that keeps on happening: The response is cut off mid-code, and it's down to me to prompt ChatGPT to continue its code. So, in 2 pieces, copy, paste, it works.
 
@@ -16,7 +18,7 @@ I ask for "more pretty" styles, and get this set of CSS, with the suggestion to 
 
 What's a game containing collision detection without a collision sound? I have an idea what I'd like to integrate, but it's more for a later stage. ChatGPT suggests the changes in HTML (using an `audio` element) and a code snipped in JS. It's interesting to see that it quietly sneaks in the HTML elements that the CSS referenced. I don't use the code changes for now, as I still need to dig for the sound file I was thinking of.
 
-But I do want to make that insinuated score counter visible, so I prompt ChatGPT on how to add a score counter. The response suggests to "modify the `createFood()` function in snake.js to update the score". But I have neither moved Javascript to an external file (ok, fine, it was already implicitly suggested in the code snippets about adding sound), nor has our joint work a `createFood()` function. 
+But I do want to make that insinuated score counter visible, so I prompt ChatGPT on how to add a score counter. The response suggests to "modify the `createFood()` function in snake.js to update the score". But I have neither moved Javascript to an external file (ok, fine, it was already implicitly suggested in the code snippets about adding sound), nor has our joint work a `createFood()` function.
 
 Sorry, ChatGPT, we need to talk about this. But my remark that we don't have this function only gets ChatGPT to double down on its alternative reality: "I apologize for the confusion. I assumed that you were using the code I provided earlier, which included a `createFood()` function.". No, ChatGPT, no, it doesn't. We bicker a bit about it, and, as is typical for ChatGPT v3.5, it changes position like a nervous song bird on a cool spring day. It moves to "I did not provide a `createFood()` method in the original code that I posted." and tries to make good by posting some code snippets on how to add it. It goes without saying that those snippets reference other methods that we didn't set up earlier either.
 
@@ -38,7 +40,7 @@ For transparency's sake, this is the point when I thought it'd be fun to write a
 
 As ChatGPT kept referencing a `checkCollision()` method that didn't exist, I thought of this peace offering as next step. Hey, if it exists, maybe we can become better collaborators. At this point, I had it explain the inline code it had generated for this, and it did a great job. Except that it confidently explained 4 out of 5 checks and sat down as if we were finished. So lazy. But, asking again, it was able to explain the last part about colliding with itself, too.
 
-### [715063a](https://github.com/mwillerich/browsersnake/commit/715063a451b559ba275cc3493dfa5e1a48d83254) added collision sound 
+### [715063a](https://github.com/mwillerich/browsersnake/commit/715063a451b559ba275cc3493dfa5e1a48d83254) added collision sound
 
 Yesterday I fired up Garageband and the minibit plug-in to create a few 8-bit-ish game sounds. Right now only the collision sound matches my expectation and the current stage of the game, so I take ChatGPT's earlier suggestions and implement it as HTML audio element, and load and trigger it in the now existing collision routine. It works fine as a first attempt, so into a commit it goes. I test, commit and push and tell ChatGPT about it. It has an improvement suggestion to preload the sound, something that I noticed as improvable during testing. The emotional complexity of doing exactly to the letter what the machine told me, only for it to turn around and tell me that there's a better way is impressive. Like, why didn't you tell me before? This isn't "explain it to me like I'm five, and then explain it to me again like I'm 35, with _that_ look on your robot face, judging my very basic results".
 
@@ -59,12 +61,12 @@ Next up we implement the score counter. ChatGPT gives a thorough first explanati
 And then we talk about it. I learn about ChatGPT using the current session's conversation plus pre-existing knowledge to come up with answers, but that there's no guarantee it can access the whole session at the point of answering, and that its context fluctuates from answer to answer. The next few sentences are interesting, though:
 
 > However, there are some strategies we can use to make sure that important information is not forgotten.
-> 
+>
 > One way is to summarize key points or decisions we make during the conversation and repeat them back to each other to confirm understanding. Another way is to use a collaborative tool, such as a shared document or note-taking app, to keep track of important information and decisions made during our conversation.
-> 
+>
 > In addition, if you have specific information or instructions that you want me to remember throughout the session, you can always remind me of it by providing the necessary context.
 
-Whaaat, we can use collaborative tools? ChatGPT starts fumbling. I can't do this, I'm an AI, I can't do that, etc. And: 
+Whaaat, we can use collaborative tools? ChatGPT starts fumbling. I can't do this, I'm an AI, I can't do that, etc. And:
 
 > I do not have the ability to access or retrieve information outside of this conversation or interact with any external data sources without explicit permission and authorization.
 
@@ -81,11 +83,12 @@ It's fun to test this food collision avoidance, as the chances are not that grea
 ### [3392c18](https://github.com/mwillerich/browsersnake/commit/3392c18) lets add a face to the snake
 
 As a next step I felt some customization was necessary. My kids were not impressed with this monumental coding effort, so I got one of them involved and she produced the snake's head for me to digitize and integrate. As in my last few active years as a developer I was only working on the server side, we touched upon something I've never done: Working with the canvas element. I had a paper drawing for the head and no idea how to best integrate it.
-ChatGPT, maybe due to terminology, first suggested I want to create 20x20 bitmap array, but broke down while sending the syntax for an array of arrays with 400 values. Then it confused the `drawSquare()` method to be able to draw single pixels, and I abandoned that idea. Let's just use a .png. I created the file, and we took it from there. It took 11 rounds, with one significant off-by-one mistake on my side and many I-can't-remember-what-I-last-said mistakes on ChatGPT's side, and in the end I used a routine from Stack Overflow, until the snake had a head, connected to its body, after any turn in any direction. My desire to get this working was stronger than my desire to make sense out of ChatGPT's drivel, or rather, to first adopt and then debug its suggestions. On the plus side, once I had mostly copy&pasted my way to a working solution that I mostly, vaguely, understood, ChatGPT was able to explain quite well what that code does. 
+ChatGPT, maybe due to terminology, first suggested I want to create 20x20 bitmap array, but broke down while sending the syntax for an array of arrays with 400 values. Then it confused the `drawSquare()` method to be able to draw single pixels, and I abandoned that idea. Let's just use a .png. I created the file, and we took it from there. It took 11 rounds, with one significant off-by-one mistake on my side and many I-can't-remember-what-I-last-said mistakes on ChatGPT's side, and in the end I used a routine from Stack Overflow, until the snake had a head, connected to its body, after any turn in any direction. My desire to get this working was stronger than my desire to make sense out of ChatGPT's drivel, or rather, to first adopt and then debug its suggestions. On the plus side, once I had mostly copy&pasted my way to a working solution that I mostly, vaguely, understood, ChatGPT was able to explain quite well what that code does.
 
 https://user-images.githubusercontent.com/486892/232804326-40f01fb9-113d-4e1e-91ac-8648792a92ba.mov
 
 ### [690954a](https://github.com/mwillerich/browsersnake/commit/690954a) levelling up
+
 We have levels! Well, _I_ have levels, I actually didn't ask ChatGPT about this, and I notice how the coding feels different:
 
 - Let's face it, this is still fairly trivial, easy-to-grasp code. It feels much quicker to add these changes by hand.
@@ -96,20 +99,47 @@ We have levels! Well, _I_ have levels, I actually didn't ask ChatGPT about this,
 So, with this commit, I was able to change the game experience by quite a bit, it felt light (compared to the canvas mess anything feels light!), but boy did I not check myself. The pride of a clean codebase is gone. Maybe it's a good idea to have ChatGPT look after this code after all.
 
 ### [84d7b52](https://github.com/mwillerich/browsersnake/commit/84d7b52) queueing keypress events to prevent owlface
+
 This is the second of two bugs I saw early on. Food being placed on the snake was the first one, and the snake turning its head 180 degrees when two or more arrow keys were pressed within one cycle was the other one. ChatGPT and I had a conversation about this a few days ago, but I didn't implement it right away, because the head was definitely a priority. I felt it was a useful conversation. The code suggestion was close to copy&paste fodder, I only needed to fix the scope in various places and wrap one part in a function.
 
-We discussed approaches, ChatGPT first suggested a flag to detect, whether a keystroke had be registered during a cycle, and block all subsequent ones, something that, as a occasional casual games player would annoy me to no end. The cycles are slow, so the player would be limited to one keystroke every 100ms. Its next suggestion was also weird: A flag signaling if there had been a keystroke already. If set, any further keystroke in the same cycle would be written into a `nextDirection` field, which was executed the next cycle. So, only the last keystroke in a cycle would be registered, and only executed in the next cycle. I couldn't make sense of it, so I suggested a queue that, outside of the cycle, would collect all registered keystrokes, and within the cycle this queue would be worked off 1 per cycle. In its usual chirpiness, ChatGPT found that this was "definitely a viable solution". 
+We discussed approaches, ChatGPT first suggested a flag to detect, whether a keystroke had be registered during a cycle, and block all subsequent ones, something that, as a occasional casual games player would annoy me to no end. The cycles are slow, so the player would be limited to one keystroke every 100ms. Its next suggestion was also weird: A flag signaling if there had been a keystroke already. If set, any further keystroke in the same cycle would be written into a `nextDirection` field, which was executed the next cycle. So, only the last keystroke in a cycle would be registered, and only executed in the next cycle. I couldn't make sense of it, so I suggested a queue that, outside of the cycle, would collect all registered keystrokes, and within the cycle this queue would be worked off 1 per cycle. In its usual chirpiness, ChatGPT found that this was "definitely a viable solution".
 
 Looking for a sensible maximum length, ChatGPT suggested that "The fastest video game controller button-presser is reportedly a player named 'Halo God,' who can press buttons up to 16 times per second.". Well I managed to turn my well-fed snake into a fancy green staircase with up to 5 keystrokes per 100ms cycle, so maybe Halo God isn't the best benchmark.
 
 <img width="400" alt="Snake doing an owlface" src="https://user-images.githubusercontent.com/486892/232915328-ea7cf3ef-cfc7-40e0-b4d0-20a81b3c7aca.png">
 
 ### Excursion: the Hydra (geddit? Snake? Hydra?) of executing one good idea
+
 For every few commits that I wrote about here, there are a few more ideas and conversations with ChatGPT, that I try to get back to at some point, just like the issue with the multiple keystrokes per cycle I mentioned above. Other things are both off-ChatGPT and somewhat off-site; last night I finally set up Github Pages for this project. I mean, this is a simple, clientside browser game, why shouldn't it be hosted somewhere for you to play? I first looked into this at the end of last week, and it really is only a few clicks.
 
 It's funny, I'm building this game with as little "auto-pilot" as possible; working this particular way with this particular conversational AI, which I really can't recommend at all, dear future rockstar developers (plenty examples given above), makes that pretty impossible anyway. Doing it this way allows me to see that on almost every step of the way, there aren't only smaller or larger decisions to make, but there's always that one-other-thing-but-not-now, that turns ticking any item off of a list into adding two new ones. Good thing I'm not getting paid for this 😅.
 
 ### [f1343f8](https://github.com/mwillerich/browsersnake/commit/f1343f8) fix splash game over
+
 I admit I've gotten a little tired of running circles around free ChatGPT in order to build this game, and the most recent relatively constant duty to double-check any line of code, fix it, etc.
 
 A few days ago I sat down for a Game Over sequence. I wanted to implement a sequence, so something happens on-screen when eventually there's Game Over music. I came up with the letters being printed on a long-enough snake, but the orientation posed both stylistically and logically an issue. So far the body of the snake carries no orientation data, only the position of the square. As I only need the orientation for the end sequence, I decided to derive it from the position instead of permanently storing it throughout the game. Then the magic happened: ChatGPT understood my convoluted idea right away, and, to my surprise, produced working code! It's not the prettiest, but it isn't making things worse than what they already are.
+
+### Excursion: deciding on a summit, plotting the path on a map
+
+In order to keep my motivation up for this, I felt that I needed to see a finish line. I get some joy out of developing my own visual metaphors for software processes, that my teams then needs to endure, but the hit-and-miss rate over the years suggests that it is generally helpful. In this project's case, it felt like I looked around, saw a mountain range on the horizon and started walking in that general direction. Being so far away I didn't need to pick a specific mountain, but now I've progressed a little in terms of code, read a lot on alternatives and additions to ChatGPT, and understand the limitations that my original choice of tooling presents.
+
+It's like I've eaten more than half of my packed lunch, and have for sure more than half of the coding journey ahead of me! I need to decide where exactly I want to go, and map out how to get there.
+
+So here's the chosen mountain top I'd like to reach:
+I'd like to working game that is operable on its page, with mechanisms to compare your last game against others or past games, and a consistent soundscape in and around the game. The source code should be consistent and maintainable.
+
+And that's the map, in no particular order:
+
+- The game needs start and restart controls, so it can be played many times without reloading the page.
+- There should be a splash screen of sorts for when the page loads.
+- The scores resetting after each level is silly. It should continuously count up, with the levels being an indicator on speed/difficulty and nothing else.
+- The music and sounds need to be created and added.
+- The sound preloader is either not preloading the sound, or it takes many cycles to first play it. This needs fixing, particularly if I add sound for eating the food.
+- The score and level position should be improved.
+- I'd like a locally stored hi-score table. Details still a little fuzzy. Alternatively or in combination I'd love a way to share results. I already know how to push out a .png of the last cycle, it'd be fun to share your results with others. Particularly on mobile, ahem (see below).
+- The game page should tie in with this project log, and give some context as to why it's more than a blocky basic version of Snake.
+
+Maybe there's a summit right next to this one, it's called "mobile support" with gestures and a different screen layout, but right now I don't know whether I can be bothered with it.
+
+Outside the game itself I'd love to tie the ChatGPT conversations into this log. A JSON export exists, and in order to display snippets of conversation I'd like to build a script pulling relevant conversations in, styling it like the default ChatGPT style. So far I have no idea how these types of preview snippets are typically created, and in addition, ChatGPT appears to be unaware of its frontend.
