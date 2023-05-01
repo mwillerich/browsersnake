@@ -328,5 +328,20 @@ const context = canvas.getContext("2d");
 const snakeHeadImage = new Image();
 snakeHeadImage.src = "img/snakehead.png";
 
-// Initialize the game
-Snake.init();
+const splashScreen = document.getElementById('splash-screen');
+const startButton = document.getElementById('start-button');
+
+// hide the canvas initially
+canvas.style.display = 'none';
+
+// add a click event listener to the start button
+startButton.addEventListener('click', startGame);
+
+function startGame() {
+  // show the canvas and hide the splash screen
+  canvas.style.display = 'block';
+  splashScreen.style.display = 'none';
+
+  // Initialize the game
+  Snake.init();
+}
