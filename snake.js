@@ -205,6 +205,10 @@ var Snake = {
       this.startLevel();
     } else {
       this.collisionSound.play();
+      self = this;
+      setTimeout(() => {
+        self.gameoverSound.play();
+      }, "750");
       this.gameOverSequence();
     }
   },
@@ -296,6 +300,11 @@ var Snake = {
     this.eatSound = document.getElementById("eat-sound");
     this.eatSound.addEventListener("canplaythrough", function() {
       console.log("eat canplaythrough");
+    });
+
+    this.gameoverSound = document.getElementById("gameover-sound");
+    this.gameoverSound.addEventListener("canplaythrough", function() {
+      console.log("gameover canplaythrough");
     });
 
     this.scoreCounter = document.getElementById("score");
